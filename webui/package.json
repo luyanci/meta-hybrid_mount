@@ -1,22 +1,22 @@
 {
   "name": "hybrid-mount-miuix",
   "license": "Apache-2.0",
-  "author": {
-    "name": "luyanci"
-  },
   "description": "hybrid mount metamodule's webui miuix version,based on miuix-vue.(WIP)",
   "private": true,
   "version": "0.1.0-alpha",
   "type": "module",
   "packageManager": "pnpm@11.7.0",
   "scripts": {
+    "generate:info-tab-data": "node ./scripts/generate-info-tab-data.mjs",
+    "prebuild": "pnpm generate:info-tab-data",
     "dev": "vite --host",
     "build": "vite build --emptyOutDir",
+    "preview": "vite preview",
     "format": "prettier --write .",
-    "lint": "eslint . && prettier --check .",
-    "lint:fix": "eslint . --fix && prettier --write .",
-    "typecheck": "vue-tsc -b",
-    "preview": "vite preview"
+    "lint": "eslint . && vue-tsc -b",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run --environment node",
+    "test:watch": "vitest --environment node"
   },
   "dependencies": {
     "vue": "^3.5.38",
@@ -41,6 +41,7 @@
     "typescript": "~6.0.3",
     "vconsole": "^3.15.1",
     "vite": "^8.0.16",
+    "vitest": "^4.1.9",
     "vue-eslint-parser": "^10.4.1",
     "vue-i18n": "^11.4.6",
     "vue-tsc": "^3.3.5"
