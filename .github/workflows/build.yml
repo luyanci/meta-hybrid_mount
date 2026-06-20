@@ -196,4 +196,4 @@ jobs:
           cargo xtask notify \
             --output notify-output \
             --label "日常耕作 🌱 (Daily Tilling) [full+lite+nano] - ${{ github.ref_name }}" \
-            --topic-id 37
+            --topic-id 0
