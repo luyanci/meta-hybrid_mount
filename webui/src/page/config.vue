@@ -161,7 +161,6 @@ function reset_config() {
 
     <MiuixSmallTitle :text="t('tabs.config')" />
     <MiuixCard class="ex-card">
-
       <MiuixBasicComponent>
         <template #start>
           <MiuixText>{{ t("config.disableUmount") }}</MiuixText>
@@ -178,7 +177,7 @@ function reset_config() {
           <MiuixSwitch v-model="daemon" label="Enabled" />
         </template>
       </MiuixBasicComponent>
-      
+
       <MiuixBasicComponent
         :title="t('config.moduleDir')"
         :summary="t('config.moduleDirDesc')"

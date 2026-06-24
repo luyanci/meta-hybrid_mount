@@ -1,3 +1,20 @@
+<!--
+
+    Copyright (C) 2026 YuzakiKokuban <heibanbaize@gmail.com>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
 <script setup lang="ts">
 // Copyright 2026, miuix-vue contributors
 // SPDX-License-Identifier: Apache-2.0
@@ -11,73 +28,86 @@
 // present. Focusing expands the bar: a Cancel action slides in and the results
 // content (default slot) reveals. SearchBar insideMargin 12×0.
 
-import { ref } from 'vue'
-import { Motion, AnimatePresence } from 'motion-v'
-import { MiuixIcon } from 'miuix-vue'
-import { Search, Hide } from 'miuix-vue/icons'
+import { ref } from "vue";
+import { Motion, AnimatePresence } from "motion-v";
+import { MiuixIcon } from "miuix-vue";
+import { Search, Hide } from "miuix-vue/icons";
 
-defineOptions({ name: 'ModuleSearchBar' })
+defineOptions({ name: "ModuleSearchBar" });
 
 interface Props {
-  modelValue?: string
-  expanded?: boolean
-  label?: string
-  cancelText?: string
-  hideEnabled?: boolean
+  modelValue?: string;
+  expanded?: boolean;
+  label?: string;
+  cancelText?: string;
+  hideEnabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: '',
+  modelValue: "",
   expanded: false,
-  label: 'Search',
-  cancelText: 'Cancel',
+  label: "Search",
+  cancelText: "Cancel",
   hideEnabled: true,
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string]
-  'update:expanded': [value: boolean]
-  search: [value: string]
-  'update:hideEnabled': [value: boolean]
-}>()
+  "update:modelValue": [value: string];
+  "update:expanded": [value: boolean];
+  search: [value: string];
+  "update:hideEnabled": [value: boolean];
+}>();
 
-const inputRef = ref<HTMLInputElement | null>(null)
+const inputRef = ref<HTMLInputElement | null>(null);
 
 function onInput(e: Event): void {
-  emit('update:modelValue', (e.target as HTMLInputElement).value)
+  emit("update:modelValue", (e.target as HTMLInputElement).value);
 }
 function expand(): void {
-  if (!props.expanded) emit('update:expanded', true)
+  if (!props.expanded) emit("update:expanded", true);
 }
 function cancel(): void {
-  emit('update:modelValue', '')
-  emit('update:expanded', false)
-  inputRef.value?.blur()
+  emit("update:modelValue", "");
+  emit("update:expanded", false);
+  inputRef.value?.blur();
 }
 function clear(): void {
-  emit('update:modelValue', '')
-  inputRef.value?.focus()
+  emit("update:modelValue", "");
+  inputRef.value?.focus();
 }
 function onEnter(): void {
-  emit('search', props.modelValue)
+  emit("search", props.modelValue);
 }
 function toggleHide(): void {
-  emit('update:hideEnabled', !props.hideEnabled)
+  emit("update:hideEnabled", !props.hideEnabled);
 }
 
 // AnimatedVisibility size transitions default to spring(StiffnessMediumLow=400,
 // dampingRatio=1) → damping = 2*1*sqrt(400) = 40.
-const cancelTransition = { type: 'spring' as const, stiffness: 400, damping: 40 }
-const resultsTransition = { type: 'spring' as const, stiffness: 400, damping: 40 }
+const cancelTransition = {
+  type: "spring" as const,
+  stiffness: 400,
+  damping: 40,
+};
+const resultsTransition = {
+  type: "spring" as const,
+  stiffness: 400,
+  damping: 40,
+};
 </script>
 
 <template>
   <div class="m-search-bar">
     <div class="m-search-bar__row">
       <label class="m-search-bar__field">
-        <span class="m-search-bar__leading"><MiuixIcon :icon="Search" size="16" weight="medium" /></span>
+        <span class="m-search-bar__leading">
+          <MiuixIcon :icon="Search" size="16" weight="medium" />
+        </span>
         <span class="m-search-bar__input-wrap">
-          <span v-if="!props.modelValue && !props.expanded" class="m-search-bar__label">
+          <span
+            v-if="!props.modelValue && !props.expanded"
+            class="m-search-bar__label"
+          >
             {{ props.label }}
           </span>
           <input
@@ -106,7 +136,13 @@ const resultsTransition = { type: 'spring' as const, stiffness: 400, damping: 40
             <!-- SearchCleanup glyph: circle fillAlpha 0.06, X fillAlpha 0.3,
                  tinted onSurfaceContainerHighest. -->
             <svg viewBox="0 0 24 24" width="16" height="16">
-              <circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.06" />
+              <circle
+                cx="12"
+                cy="12"
+                r="11"
+                fill="currentColor"
+                opacity="0.06"
+              />
               <path
                 d="M8 8 L16 16 M16 8 L8 16"
                 stroke="currentColor"
@@ -118,9 +154,15 @@ const resultsTransition = { type: 'spring' as const, stiffness: 400, damping: 40
             </svg>
           </Motion>
         </AnimatePresence>
-          <button type="button" class="m-search-bar__hide" :class="{ 'm-search-bar__hide--enabled': props.hideEnabled }" @click="toggleHide" aria-label="Toggle hide">
-            <MiuixIcon :icon="Hide" />
-          </button>
+        <button
+          type="button"
+          class="m-search-bar__hide"
+          :class="{ 'm-search-bar__hide--enabled': props.hideEnabled }"
+          @click="toggleHide"
+          aria-label="Toggle hide"
+        >
+          <MiuixIcon :icon="Hide" />
+        </button>
       </label>
       <AnimatePresence :initial="false">
         <Motion

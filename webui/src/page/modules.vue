@@ -135,13 +135,10 @@ onMounted(async () => {
               textColor="var(--m-color-on-error)"
             >
               {{ t("modules.mountError") }}
-          </Label>
-            <Label
-              v-else-if="module.mode === 'ignore'"
-              type="body2"
-            >
+            </Label>
+            <Label v-else-if="module.mode === 'ignore'" type="body2">
               {{ t("modules.modes.unmounted") }}
-          </Label>
+            </Label>
             <Label
               v-else
               type="body2"

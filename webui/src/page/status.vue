@@ -23,13 +23,11 @@ import {
   MiuixCard,
   MiuixSmallTitle,
   MiuixBasicComponent,
-  MiuixIcon,
   MiuixText,
 } from "miuix-vue";
-import { Info } from "miuix-vue/icons";
 import { API } from "../lib/api";
 import { ENABLE_KASUMI } from "../lib/constants_gen";
-import StatusCard from "../components/StatusCard.vue"
+import StatusCard from "../components/StatusCard.vue";
 
 const storage_path = ref("/dev/homo/114514");
 const storage_mode = ref("HomoFS");
