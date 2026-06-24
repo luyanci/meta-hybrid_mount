@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@rayxiom/prettier-config": "^4.5.1",
+    "@remixicon/vue": "^4.9.0",
     "@types/node": "^24.13.2",
     "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@typescript-eslint/parser": "^8.61.1",
@@ -38,6 +39,7 @@
     "miuix-vue": "^0.1.1",
     "motion-v": "^2.3.0",
     "prettier": "^3.8.4",
+    "sass-embedded": "^1.100.0",
     "typescript": "~6.0.3",
     "vconsole": "^3.15.1",
     "vite": "^8.0.16",

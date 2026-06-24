@@ -25,7 +25,7 @@ import {
   MiuixBasicComponent,
   MiuixText,
 } from "miuix-vue";
-import hybrid from "../compoments/logo.vue";
+import hybrid from "../components/logo.vue";
 import { useI18n } from "vue-i18n";
 import axios from "axios";
 import { API } from "../lib/api";

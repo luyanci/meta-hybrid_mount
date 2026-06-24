@@ -29,6 +29,7 @@ import {
 import { Info } from "miuix-vue/icons";
 import { API } from "../lib/api";
 import { ENABLE_KASUMI } from "../lib/constants_gen";
+import StatusCard from "../components/StatusCard.vue"
 
 const storage_path = ref("/dev/homo/114514");
 const storage_mode = ref("HomoFS");
@@ -89,27 +90,13 @@ onMounted(async () => {
 
 <template>
   <div class="page">
-    <MiuixCard
-      class="ex-card ex-card--pad"
-      show-indication
-      style="--m-card-color: var(--m-color-primary-variant)"
-    >
-      <MiuixBasicComponent
-        :title="t('status.storageTitle')"
-        titleColor="var(--m-color-on-primary-variant)"
-        :summary="storage_path"
-        summaryColor="var(--m-color-on-primary-variant)"
-      >
-        <template #start>
-          <MiuixIcon color="var(--m-color-on-primary-variant)" :icon="Info" />
-        </template>
-        <template #end>
-          <MiuixText style="color: var(--m-color-on-primary-variant)">
-            {{ storage_mode }}
-          </MiuixText>
-        </template>
-      </MiuixBasicComponent>
-    </MiuixCard>
+    <StatusCard
+      class="ex-card"
+      status="running"
+      :label="t('status.storageTitle')"
+      :description="storage_mode"
+      :summary="storage_path"
+    />
     <div class="ex-card-row">
       <MiuixCard class="ex-card--pad ex-grow">
         <MiuixBasicComponent :title="t('status.moduleActive')">

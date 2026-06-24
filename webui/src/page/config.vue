@@ -161,6 +161,24 @@ function reset_config() {
 
     <MiuixSmallTitle :text="t('tabs.config')" />
     <MiuixCard class="ex-card">
+
+      <MiuixBasicComponent>
+        <template #start>
+          <MiuixText>{{ t("config.disableUmount") }}</MiuixText>
+        </template>
+        <template #end>
+          <MiuixSwitch v-model="umount_disabled" label="Enabled" />
+        </template>
+      </MiuixBasicComponent>
+      <MiuixBasicComponent>
+        <template #start>
+          <MiuixText>{{ t("config.daemonStartupMode") }}</MiuixText>
+        </template>
+        <template #end>
+          <MiuixSwitch v-model="daemon" label="Enabled" />
+        </template>
+      </MiuixBasicComponent>
+      
       <MiuixBasicComponent
         :title="t('config.moduleDir')"
         :summary="t('config.moduleDirDesc')"
@@ -229,22 +247,6 @@ function reset_config() {
         </Motion>
       </AnimatePresence>
 
-      <MiuixBasicComponent>
-        <template #start>
-          <MiuixText>{{ t("config.disableUmount") }}</MiuixText>
-        </template>
-        <template #end>
-          <MiuixSwitch v-model="umount_disabled" label="Enabled" />
-        </template>
-      </MiuixBasicComponent>
-      <MiuixBasicComponent>
-        <template #start>
-          <MiuixText>{{ t("config.daemonStartupMode") }}</MiuixText>
-        </template>
-        <template #end>
-          <MiuixSwitch v-model="daemon" label="Enabled" />
-        </template>
-      </MiuixBasicComponent>
       <div style="padding: 12px; display: flex">
         <MiuixButton class="ex-glow" @click="reset_req = true">
           {{ t("config.resetConfig") }}

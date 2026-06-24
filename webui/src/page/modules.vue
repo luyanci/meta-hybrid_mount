@@ -20,7 +20,6 @@ import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import {
   showSnackbar,
-  MiuixSearchBar,
   MiuixCard,
   MiuixBasicComponent,
   MiuixSmallTitle,
@@ -30,6 +29,8 @@ import {
   MiuixIcon,
 } from "miuix-vue";
 import { Close } from "miuix-vue/icons";
+import Label from "../components/Label.vue";
+import ModuleSearchBar from "../components/ModuleSearchBar.vue";
 import { Motion, AnimatePresence } from "motion-v";
 const { t } = useI18n();
 import { API } from "../lib/api";
@@ -44,15 +45,20 @@ const expandSpring = { type: "spring" as const, stiffness: 400, damping: 40 };
 
 const searchQuery = ref("");
 const searchexpanded = ref(false);
+const hideEnabled = ref(true);
 const modules_list = ref<ModuleWithUI[]>([]);
 const kasumi_supported = ref(false);
 
 const filterModules = computed(() => {
+  let result = modules_list.value;
+  if (hideEnabled.value) {
+    result = result.filter((module) => module.enabled !== false);
+  }
   if (searchQuery.value.trim() === "") {
-    return modules_list.value;
+    return result;
   }
   const query = searchQuery.value.toLowerCase();
-  return modules_list.value.filter(
+  return result.filter(
     (module) =>
       module.name.toLowerCase().includes(query) ||
       module.description.toLowerCase().includes(query) ||
@@ -98,11 +104,12 @@ onMounted(async () => {
 <template>
   <div class="page">
     <div class="icon-search">
-      <MiuixSearchBar
+      <ModuleSearchBar
         v-model="searchQuery"
         v-model:expanded="searchexpanded"
+        v-model:hide-enabled="hideEnabled"
         :label="t('modules.searchPlaceholder')"
-      ></MiuixSearchBar>
+      ></ModuleSearchBar>
     </div>
     <div
       v-if="modules_list.length === 0 || filterModules.length === 0"
@@ -121,31 +128,32 @@ onMounted(async () => {
           @click="module.Bottomopen = !module.Bottomopen"
         >
           <template #end>
-            <MiuixText
+            <Label
               v-if="module.mount_error"
               type="body2"
-              color="var(--m-color-error)"
+              bgColor="var(--m-color-error)"
+              textColor="var(--m-color-on-error)"
             >
               {{ t("modules.mountError") }}
-            </MiuixText>
-            <MiuixText
+          </Label>
+            <Label
               v-else-if="module.mode === 'ignore'"
               type="body2"
-              color="var(--m-color-on-surface-variant-actions)"
             >
               {{ t("modules.modes.unmounted") }}
-            </MiuixText>
-            <MiuixText
+          </Label>
+            <Label
               v-else
               type="body2"
-              color="var(--m-color-on-surface-variant-actions)"
+              bgColor="var(--m-color-tertiary-container)"
+              textColor="var(--m-color-on-tertiary-container)"
             >
               {{
                 module.is_mounted
                   ? t("modules.modes." + module.mode)
                   : t("modules.modes.unmounted")
               }}
-            </MiuixText>
+            </Label>
           </template>
         </MiuixBasicComponent>
         <AnimatePresence :initial="false">
@@ -160,6 +168,7 @@ onMounted(async () => {
             <MiuixBasicComponent :summary="module.description" />
             <MiuixCard
               v-if="module.mount_error"
+              class="ex-card"
               style="--m-card-color: var(--m-color-error)"
             >
               <MiuixBasicComponent
